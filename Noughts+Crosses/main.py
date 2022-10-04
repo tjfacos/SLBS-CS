@@ -9,11 +9,15 @@ class NoughtsAndCrosses:
     AI_last_move = ""
 
     def clearScreen(self):
-        try:
-            os.system('clear')
-        except:
+        if os.name == 'nt':
+            #Clear on Windows
             os.system('cls')
+        else:
+            #Clear on Linux
+            os.system('clear')
 
+        print("============== Noughts and Crosses ==============", end="\n\n")
+        
 
     def check(self, position, placeholder): #returns True if game is won
         if self.board[position[0]] == [placeholder for x in range(3)]:
@@ -77,9 +81,9 @@ class NoughtsAndCrosses:
                 prompt_insert = "VALID"
             move = list(input(f"Player {player}, enter {prompt_insert} move: "))
 
-            while not move[0] in ["a","b","c"] and not move[1] in ["1","2","3"] and len(move) != 0:
+            if not len(move) == 2 or not move[0].lower() in ["a","b","c"] or not move[1] in ["1","2","3"]:
                 self.outputBoard()
-                move = list(input(f"Player {player}, enter VALID move: "))
+                return self.move(player, invalid=True)
 
         #    1   2   3
         #  a 00  01  02
@@ -112,11 +116,16 @@ class NoughtsAndCrosses:
             self.won = True
 
     def __call__(self): #Starts Game
-        print("============== Noughts and Crosses ==============")
-        
+        self.clearScreen()
+
+        #Reset values
+        self.won = False
+        self.board = [[0 for x in range(3)] for y in range(3)]
+        self.AI_last_move = ""
+
         mode = ""
         while not mode in ["S", "M"]:
-            mode = input("Enter S for Singleplayer, or M for Multiplayer: ")
+            mode = input("Enter S for Singleplayer, or M for Multiplayer: ").upper()
             if not mode in ["S", "M"]:
                 self.clearScreen()
                 print("Invalid! ", end="")
@@ -134,6 +143,20 @@ class NoughtsAndCrosses:
             self.move(p, ai_player)
 
             round += 1
+        
+
+        again = ""
+        while not again in ["Y", "N"]:
+            again = input("\n\nPlay again? [Y/N]: ").upper()
+            if not again in ["Y", "N"]:
+                self.clearScreen()
+                print("Invalid! ", end="")
+        
+        if again == "Y":
+            return self.__call__()
+        
+        return True
+        
         
         #Add Play Again?
 
