@@ -1,7 +1,6 @@
 import os
 from ai_class import NaCAI
 
-#Another git test
 
 class NoughtsAndCrosses:
     board = [[0 for x in range(3)] for y in range(3)]
@@ -147,12 +146,12 @@ class NoughtsAndCrosses:
 
         again = ""
         while not again in ["Y", "N"]:
-            again = input("\n\nPlay again? [Y/N]: ").upper()
-            if not again in ["Y", "N"]:
+            again = input("\n\nPlay again? [Y/N]: ").upper()[0]
+            if not again.upper() in ["Y", "N"]:
                 self.clearScreen()
                 print("Invalid! ", end="")
         
-        if again == "Y":
+        if again.upper() == "Y":
             return self.__call__()
         
         return True
