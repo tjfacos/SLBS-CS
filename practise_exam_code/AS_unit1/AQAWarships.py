@@ -10,7 +10,12 @@ import random
 def GetRowColumn():
   print()
   Column = int(input("Please enter column: "))
-  Row = int(input("Please enter row: "))
+  Row = -1
+  while Row not in range(10):
+      Row = int(input("Please enter row: "))
+      if Row not in range(10):
+          print('Invalid value entered')
+
   print()
   return Row, Column
             
@@ -23,8 +28,25 @@ def MakePlayerMove(Board, Ships):
     Board[Row][Column] = "m"
   else:
     print("Hit at (" + str(Column) + "," + str(Row) + ").")
+    CheckSunk(Board, Ships, Row, Column)
     Board[Row][Column] = "h"
-        
+
+
+def MakePlayerTorpedoMove(Board, Ships):
+    Row, Column = GetRowColumn()
+    while Row > -1:
+        if Board[Row][Column] in ["-", "m"]: 
+            Board[Row][Column] = "m"
+        else: 
+            print("Hit at (" + str(Column) + "," + str(Row) + ").")
+            CheckSunk(Board, Ships, Row, Column)
+            Board[Row][Column] = "h"
+            return None
+        Row -= 1
+    print("Torpedo hit nothing!")
+
+
+
 def SetUpBoard():
   Board = []
   for Row in range(10):
@@ -87,6 +109,15 @@ def CheckWin(Board):
       if Board[Row][Column] in ["A","B","S","D","P"]:
         return False
   return True
+
+def CheckSunk(Board, Ships, Row, Column):
+    for ship in Ships:
+        if Board[Row][Column] == ship[0][0]:
+            ship[1] -= 1
+        if ship[1] == 0:
+            print(ship[0] + " is sunk!")
+        
+
  
 def PrintBoard(Board):
   print()
@@ -125,10 +156,23 @@ def GetMainMenuChoice():
 
 def PlayGame(Board, Ships):
   GameWon = False
+  usedTorpedo = False
   while not GameWon:
+    
     PrintBoard(Board)
-    MakePlayerMove(Board, Ships)
+
+    choice = ""
+    if not usedTorpedo:
+        choice = input("Fire a Torpedo? Y/N: ")
+
+    if choice and choice.upper() == "Y":
+            MakePlayerTorpedoMove(Board, Ships)
+            usedTorpedo = True
+    else:   
+        MakePlayerMove(Board, Ships)
+                
     GameWon = CheckWin(Board)
+
     if GameWon:
       print("All ships sunk!")
       print()
