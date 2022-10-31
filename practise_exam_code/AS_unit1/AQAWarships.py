@@ -56,8 +56,14 @@ def SetUpBoard():
     Board.append(BoardRow)
   return Board
 
-def LoadGame(Filename, Board):
-  BoardFile = open(Filename, "r")
+def LoadGame(Filename, Board, Ships):
+  try:
+    BoardFile = open(Filename, "r")
+  except:
+    PlaceRandomShips(Board, Ships)
+    return
+  
+
   for Row in range(10):
     Line = BoardFile.readline()
     for Column in range(10):
@@ -145,6 +151,7 @@ def DisplayMenu():
   print()
   print("1. Start new game")
   print("2. Load training game")
+  print('3: Continue from last saved game')
   print("9. Quit")
   print()
     
@@ -159,6 +166,7 @@ def PlayGame(Board, Ships):
   usedTorpedo = False
   while not GameWon:
     
+    AutoSaveGame(Board)
     PrintBoard(Board)
 
     choice = ""
@@ -177,8 +185,14 @@ def PlayGame(Board, Ships):
       print("All ships sunk!")
       print()
 
+def AutoSaveGame(Board):
+  with open('SaveGame.txt', 'w') as file:
+    for row in Board:
+      file.write(''.join(row) + '\n')
+
 if __name__ == "__main__":
   TRAININGGAME = "Training.txt"
+  SAVEGAME = 'SaveGame.txt'
   MenuOption = 0
   while not MenuOption == 9:
     Board = SetUpBoard()
@@ -189,5 +203,8 @@ if __name__ == "__main__":
       PlaceRandomShips(Board, Ships)
       PlayGame(Board,Ships)
     if MenuOption == 2:
-      LoadGame(TRAININGGAME, Board)
+      LoadGame(TRAININGGAME, Board, Ships)
+      PlayGame(Board, Ships)
+    if MenuOption == 3:
+      LoadGame(SAVEGAME, Board, Ships)
       PlayGame(Board, Ships)   
