@@ -186,7 +186,7 @@ def PlayGame(Board, Ships):
       print()
 
 def AutoSaveGame(Board):
-  with open('SaveGame.txt', 'w') as file:
+  with open(SAVEGAME, 'w') as file:
     for row in Board:
       file.write(''.join(row) + '\n')
 
