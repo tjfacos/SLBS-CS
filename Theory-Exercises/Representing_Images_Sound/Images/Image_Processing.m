@@ -2,6 +2,11 @@ close all;
 clear all;
 clc;
 
-W = imread('Redang.jpg');
-info = imfinfo('Redang.jpg');
-disp(info);
+C = imread("PlaneGrey.jpg")
+figure(1)
+imshow(C)
+
+C(:,:) = 255 - C(:,:)
+figure(2)
+imshow(C)
+imwrite(C, "PlaneNegative.jpg")
