@@ -2,7 +2,10 @@ close all;
 clear all;
 clc;
 
-#I = imread("GLaDOS.jpg");
+pkg load image;
 
-N = [0,0,0](100 * 100);
-disp(N);
+C = imread("GLaDOS.jpg");
+imrotate(C, 180);
+
+figure(1);
+imshow(C);
