@@ -18,9 +18,8 @@ from time import ticks_ms
 
 compass.calibrate()
 
-print("Game Thingy V0.1")
-print("Find the treasure!")
-
+print("Game Thingy - V0.2")
+print("Find the right direction!")
 
 
 score = 0
@@ -30,29 +29,22 @@ bearing = randint(1,360)
 while True:
 
     direction = compass.heading()
-
-    upper_limit = bearing - 22.5
-    if upper_limit < 0:
-        upper_limit += 360
     
-    if upper_limit <= direction or direction < bearing+22.5:
-        display.show(Image.ARROW_N)
-    elif bearing+45-22.5 <= direction and direction < bearing+45+22.5:
-        display.show(Image.ARROW_NE)
-    elif direction < bearing+90+22.5:
-        display.show(Image.ARROW_E)
-    elif direction < bearing+135+22.5:
-        display.show(Image.ARROW_SE)
-    elif direction < bearing+180+22.5:
+    difference = direction - bearing
+
+
+    if abs(difference) in range(135, 225):
+        print("Down arrow")
         display.show(Image.ARROW_S)
-    elif  direction < bearing+225+22.5:
-        display.show(Image.ARROW_SW)
-    elif direction < bearing+270+22.5:
+    elif difference in range(-135, -45):
+        display.show(Image.ARROW_E)
+    elif difference in range(45, 135):
         display.show(Image.ARROW_W)
     else:
-        display.show(Image.ARROW_NW)
-
-    print(str(abs(direction-bearing)) + " Degrees away!")
+        display.show(Image.ARROW_N)
+    
+    
+    print(str(abs(difference)) + " Degrees away!")
 
     if ticks_ms() > 20_000:
         print("Time's UP!")
@@ -73,3 +65,7 @@ while True:
         display.show(Image.SMILE)
         sleep(1000)
         bearing = randint(1,360)
+
+
+
+# FUNCTIONING: NO TOUCHY
