@@ -14,22 +14,25 @@ def shift(plain, vect=5, mode=""):
     v = v_temp % length
 
     for character in plain:
-        index = alphabet.find(character)
+        lower = False
+        if character != character.upper():
+            lower = True
+        
+        
+        index = alphabet.find(character.upper())
     
         if index == -1:
             ciphertext += character
         else:
             newindex = (index + v)%length
-            ciphertext += alphabet[newindex]
+            newchar = alphabet[newindex]
+            if lower: newchar = newchar.lower()
+            ciphertext += newchar
 
     return ciphertext
 
 if __name__ == "__main__":
-    cipher = shift(input(), vect=6)
-    plain = shift(cipher, vect=6, mode="decrypt")
-    #broken, negative/positive currently doesn't matter (always shifts left)
-    print(cipher)
-    print(plain)
+    print(shift("The password is 31337", vect=20))
     
     # If vect > 0, shift to the right
     # If vect < 0, shift to the left
