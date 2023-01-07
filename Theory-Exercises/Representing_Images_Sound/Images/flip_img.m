@@ -9,8 +9,8 @@ C = imread("MilesMinor.jpg");
 for plane = 1 : z
   len = x
   for i = 1 : x
-    for j = 1 : y:
-      if i < x/2
+    for j = 1 : y
+      if (i < x/2)
         temp = C(i,j, plane);
         C(i,j,plane) = C(len, j, plane);
         C(len, j, plane) = temp;
@@ -20,3 +20,6 @@ for plane = 1 : z
     len = len - 1
   endfor
 endfor
+
+figure(1)
+imshow(C)
