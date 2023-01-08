@@ -17,31 +17,8 @@ def transpose(text, key):
     
     return ciphertext
 
-# def decodeTranspose(text, key):
-#     plaintext = ""
-
-#     grid_x = key
-#     grid_y = int(len(text)/key)
-#     if grid_y != len(text)/key:
-#         grid_y += 1
-    
-#     grid = [["" for x in range(grid_x)] for y in range(grid_y)]
-#     i = 0
-#     for x in range(grid_x):
-#         for y in range(grid_y):
-#             if i >= len(text):
-#                 grid[y][key*y] = ""
-#             else:
-#                 print(key*y+x)
-#                 grid[y][key*y] = list(text)[i+x]
-#             i += 1
-    
-#     print(grid)
-#     for row in grid:
-#         plaintext += ''.join(row)
-   
-#     return plaintext
-
+def decodeTranspose(text, key):
+    pass
 
 
 if __name__ == "__main__":
