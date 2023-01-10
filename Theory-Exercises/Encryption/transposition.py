@@ -10,7 +10,6 @@ def transpose(text, key):
     while len(grid[0]) != len(grid[-1]):
         grid[-1].append("")
 
-    # print(grid)
     for x in range(len(grid[0])):
         for y in range(len(grid)):
             ciphertext += grid[y][x]
@@ -24,25 +23,17 @@ def decodeTranspose(text, key):
         grid_y = int(grid_y ) + 1
 
     grid = [["" for x in range(grid_x )] for y in range(grid_y )]
-    # print(grid)
-    
+        
     for a in range(len(text)):
-        #print(a)
-        #print(a//key)
-        #print(a%key)
         grid[a//key][a%key] = "p"
     
-    # print(grid)
-    # print(len(text))
     i = 0
     for x in range(grid_x):
         for y in range(grid_y):
-        #    print(x,y)
            if grid[y][x]:
                 grid[y][x] = text[i]
                 i += 1
                 
-    # print(grid )
     
     plaintext = ""
     for row in grid:
