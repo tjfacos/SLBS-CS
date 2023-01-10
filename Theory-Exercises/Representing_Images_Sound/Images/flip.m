@@ -2,10 +2,8 @@ close all;
 clear all;
 clc;
 
-pkg load image;
+C = imread("MilesMinor.jpg");
 
-C = imread("GLaDOS.jpg");
-imrotate(C, 180);
+[x,y,z] = size(C);
 
-figure(1);
-imshow(C);
+print(x,y,z)
