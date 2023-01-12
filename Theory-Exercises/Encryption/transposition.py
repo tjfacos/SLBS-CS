@@ -22,14 +22,16 @@ def decodeTranspose(text, key):
     if grid_y % 1 != 0:
         grid_y = int(grid_y ) + 1
 
-    grid = [["" for x in range(grid_x )] for y in range(grid_y )]
+    grid_y = int(grid_y)
+
+    grid = [["" for x in range(int(grid_x) )] for y in range(int(grid_y) )]
         
     for a in range(len(text)):
         grid[a//key][a%key] = "p"
     
     i = 0
     for x in range(grid_x):
-        for y in range(grid_y):
+        for y in range(int(grid_y)):
            if grid[y][x]:
                 grid[y][x] = text[i]
                 i += 1
